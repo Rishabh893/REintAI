@@ -5,28 +5,48 @@
 
 ```
 REintAI/
-│
+├── .git/
+├── README.md
 ├── analysis/
 │   ├── Wind Power Dependablity Analysis/
 │   │   └── wind_dependability.ipynb
 │   └── Wind Power Forecast Error Analysis/
 │       └── wind_forecast_error_analysis.ipynb
-│
 └── Application/
-	 └── windanalysis/
-		  ├── package.json, tsconfig.json, next.config.ts, etc.
-		  ├── public/           # Static assets (SVGs, images)
-		  ├── src/
-		  │   ├── app/
-		  │   │   ├── layout.tsx, page.tsx, globals.css
-		  │   │   └── api/
-		  │   │       ├── actuals/route.ts
-		  │   │       └── forecasts/route.ts
-		  │   └── components/
-		  │       ├── dashboard.tsx, header.tsx
-		  │       └── ui/
-		  │           ├── chart.tsx, controls.tsx
-		  └── ...other config files
+	└── windanalysis/
+		├── .gitignore
+		├── .next/
+		├── eslint.config.mjs
+		├── next-env.d.ts
+		├── next.config.ts
+		├── node_modules/
+		├── package-lock.json
+		├── package.json
+		├── postcss.config.mjs
+		├── tsconfig.json
+		├── public/
+		│   ├── file.svg
+		│   ├── globe.svg
+		│   ├── next.svg
+		│   ├── vercel.svg
+		│   └── window.svg
+		└── src/
+			├── app/
+			│   ├── favicon.ico
+			│   ├── globals.css
+			│   ├── layout.tsx
+			│   ├── page.tsx
+			│   └── api/
+			│       ├── actuals/
+			│       │   └── route.ts
+			│       └── forecasts/
+			│           └── route.ts
+			└── components/
+				├── dashboard.tsx
+				├── header.tsx
+				└── ui/
+					├── chart.tsx
+					└── controls.tsx
 ```
 
 ## How to Start the Application
@@ -49,6 +69,4 @@ REintAI/
 
 The application is deployed at:
 
-**[Deployment Link (Vercel/Heroku) - Placeholder]**
-
-Replace this with your actual deployment URL when available.
+**[reintai.vercel.app](http://reintai.vercel.app)**
