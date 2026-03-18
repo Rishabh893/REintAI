@@ -9,6 +9,9 @@ interface ControlsProps {
 
 export function Controls({ onSearch, isLoading }: ControlsProps) {
     // Defaulting to Jan 2024 to fetch actual historical records without issue
+    const maxRangeDays = 30;
+    const maxRangeMs = maxRangeDays * 24 * 60 * 60 * 1000;
+
     const [startStr, setStartStr] = useState("2024-01-01T00:00");
     const [endStr, setEndStr] = useState("2024-01-02T00:00");
     const [horizon, setHorizon] = useState(4);
@@ -25,8 +28,8 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
                 if (e < s) {
                     e = new Date(s.getTime() + 24 * 60 * 60 * 1000);
                     setEndStr(e.toISOString().slice(0, 16));
-                } else if (e.getTime() - s.getTime() > 14 * 24 * 60 * 60 * 1000) {
-                    e = new Date(s.getTime() + 14 * 24 * 60 * 60 * 1000);
+                } else if (e.getTime() - s.getTime() > maxRangeMs) {
+                    e = new Date(s.getTime() + maxRangeMs);
                     setEndStr(e.toISOString().slice(0, 16));
                 }
 
@@ -37,10 +40,15 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
     }, [startStr, endStr, horizon, onSearch]);
 
     return (
-        <div className="w-full rounded-xl border border-slate-200 bg-slate-50/70 p-4">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,1fr)] md:items-end">
+        <div className="w-full rounded-3xl border border-slate-300/70 bg-[#fffaf0]/75 p-4 sm:p-5">
+            <div className="mb-4 flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">Control deck</p>
+                <p className="text-xs text-slate-500">Max window {maxRangeDays} days</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(300px,1fr)] md:items-end">
                 <div className="flex flex-col">
-                    <label htmlFor="startStr" className="mb-1 text-sm font-medium text-slate-700">
+                    <label htmlFor="startStr" className="mb-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">
                         Start time (UTC)
                     </label>
                     <input
@@ -48,12 +56,12 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
                         id="startStr"
                         value={startStr}
                         onChange={(e) => setStartStr(e.target.value)}
-                        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                        className="w-full rounded-xl border border-slate-300 bg-white/95 px-3 py-2.5 text-sm font-medium text-slate-900 shadow-sm outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/15"
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label htmlFor="endStr" className="mb-1 text-sm font-medium text-slate-700">
+                    <label htmlFor="endStr" className="mb-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">
                         End time (UTC)
                     </label>
                     <input
@@ -61,16 +69,16 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
                         id="endStr"
                         value={endStr}
                         onChange={(e) => setEndStr(e.target.value)}
-                        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                        className="w-full rounded-xl border border-slate-300 bg-white/95 px-3 py-2.5 text-sm font-medium text-slate-900 shadow-sm outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-500/15"
                     />
                 </div>
 
-                <div className="flex flex-col">
-                    <div className="mb-2 flex items-center justify-between text-sm">
-                        <label htmlFor="horizon" className="font-medium text-slate-700">
+                <div className="flex flex-col rounded-2xl border border-slate-300/70 bg-white/70 p-3">
+                    <div className="mb-2 flex items-center justify-between">
+                        <label htmlFor="horizon" className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">
                             Forecast horizon
                         </label>
-                        <span className="rounded-full bg-blue-50 px-2 py-0.5 font-semibold text-blue-700">{horizon}h</span>
+                        <span className="rounded-full border border-amber-700/30 bg-amber-500/15 px-2.5 py-1 text-xs font-semibold text-amber-900">{horizon}h</span>
                     </div>
                     <input
                         type="range"
@@ -79,10 +87,10 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
                         max="48"
                         value={horizon}
                         onChange={(e) => setHorizon(parseInt(e.target.value))}
-                        className="h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed"
-                        style={{ accentColor: '#2563eb' }}
+                        className="h-2.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-300/70 focus:outline-none focus:ring-4 focus:ring-amber-500/20"
+                        style={{ accentColor: '#d97706' }}
                     />
-                    <div className="mt-2 flex justify-between text-[11px] text-slate-500">
+                    <div className="mt-2 flex justify-between text-[11px] font-medium text-slate-500">
                         <span>1h</span>
                         <span>24h</span>
                         <span>48h</span>
@@ -90,10 +98,10 @@ export function Controls({ onSearch, isLoading }: ControlsProps) {
                 </div>
             </div>
 
-            <div className="mt-3 text-xs text-slate-500">
+            <div className="mt-4 rounded-xl border border-dashed border-slate-300/80 bg-white/60 px-3 py-2 text-xs text-slate-600">
                 {isLoading
-                    ? "Refreshing data..."
-                    : "Data refreshes automatically shortly after you adjust date range or horizon."}
+                    ? "Refreshing corridor and forecast layers..."
+                    : "Updates run automatically 1.5 seconds after you edit time or horizon."}
             </div>
         </div>
     );

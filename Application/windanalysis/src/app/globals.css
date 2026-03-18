@@ -1,8 +1,65 @@
 @import "tailwindcss";
 
+:root {
+    --bg-base: #f6efe2;
+    --bg-mist: #fff8eb;
+    --ink: #14213d;
+    --ink-soft: #42526b;
+    --card: rgba(255, 255, 255, 0.72);
+    --card-border: rgba(188, 170, 145, 0.35);
+    --accent: #0f766e;
+    --accent-2: #d97706;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    color: rgb(15, 23, 42);
-    background: radial-gradient(circle at top, #f8fafc 0%, #ffffff 45%, #f8fbff 100%);
+    color: var(--ink);
+    font-family: var(--font-ui), ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+    background-color: var(--bg-base);
+    background-image:
+        radial-gradient(circle at 6% 14%, rgba(15, 118, 110, 0.22) 0%, rgba(15, 118, 110, 0) 34%),
+        radial-gradient(circle at 92% 8%, rgba(217, 119, 6, 0.24) 0%, rgba(217, 119, 6, 0) 28%),
+        radial-gradient(circle at 88% 86%, rgba(20, 33, 61, 0.16) 0%, rgba(20, 33, 61, 0) 32%),
+        linear-gradient(165deg, var(--bg-mist) 0%, #f6ecda 45%, #efe5d3 100%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+}
+
+.panel-surface {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 35px rgba(27, 34, 53, 0.08);
+    backdrop-filter: blur(12px);
+}
+
+.fade-rise {
+    animation: fade-rise 620ms cubic-bezier(0.2, 0.65, 0.2, 1) both;
+}
+
+.stagger-1 {
+    animation-delay: 70ms;
+}
+
+.stagger-2 {
+    animation-delay: 150ms;
+}
+
+.stagger-3 {
+    animation-delay: 230ms;
+}
+
+@keyframes fade-rise {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
